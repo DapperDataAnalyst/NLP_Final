@@ -11,3 +11,6 @@ Definition: Contrast sets are small, hand-constructed datasets where each exampl
 Purpose: To evaluate whether a model's predictions are consistent and robust when exposed to changes in input that should logically lead to different outputs.
 Example: If a model correctly classifies the sentence "The cat is on the mat," a contrast set example might change it to "The cats are on the mats" to check if the model handles plurality properly.
 Reference: Gardner et al. (2020) introduced contrast sets to help reveal where models struggle with generalizing small perturbations in their data.
+
+Evaluation resutls from unmodified Electra-small model evaluated on the 600 contrast set examples:
+{'eval_loss': 1.7521252632141113, 'eval_model_preparation_time': 0.004, 'eval_accuracy': 0.6466666460037231, 'eval_runtime': 1.5243, 'eval_samples_per_second': 393.634, 'eval_steps_per_second': 49.204}
