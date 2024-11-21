@@ -1,6 +1,11 @@
 Evaluation results from unmodified Electra-small model fully trained on SNLI:
 {'eval_loss': 0.3853161334991455, 'eval_accuracy': 0.8918918967247009, 'eval_runtime': 93.1878, 'eval_samples_per_second': 105.615, 'eval_steps_per_second': 13.21, 'epoch': 3.0}
 
+For SNLI dataset:
+Training set size: 550152
+Validation set size: 10000
+Test set size: 10000
+
 1. Contrast Sets
 Definition: Contrast sets are small, hand-constructed datasets where each example in the set is a minimal modification of an original example. These modifications are designed to test whether models can handle slight variations in input.
 Purpose: To evaluate whether a model's predictions are consistent and robust when exposed to changes in input that should logically lead to different outputs.
