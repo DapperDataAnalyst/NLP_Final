@@ -7,6 +7,9 @@ from helpers import prepare_dataset_nli, prepare_train_dataset_qa, \
 import os
 import json
 import torch
+import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
 print(torch.cuda.is_available())  # Should return True if CUDA is available
 
@@ -178,18 +181,28 @@ def main():
         #   See https://huggingface.co/transformers/main_classes/trainer.html#transformers.Trainer.add_callback
         #   and https://huggingface.co/transformers/main_classes/callback.html#transformers.TrainerCallback
 
+    # Add this inside `if training_args.do_eval`
     if training_args.do_eval:
         results = trainer.evaluate(**eval_kwargs)
 
-        # To add custom metrics, you should replace the "compute_metrics" function (see comments above).
-        #
-        # If you want to change how predictions are computed, you should subclass Trainer and override the "prediction_step"
-        # method (see https://huggingface.co/transformers/_modules/transformers/trainer.html#Trainer.prediction_step).
-        # If you do this your custom prediction_step should probably start by calling super().prediction_step and modifying the
-        # values that it returns.
-
         print('Evaluation results:')
         print(results)
+
+        # Extract true labels and predicted labels
+        true_labels = np.array([example['label'] for example in eval_dataset])
+        pred_labels = np.argmax(eval_predictions.predictions, axis=1)  # Model predictions
+
+        # Compute confusion matrix
+        cm = confusion_matrix(true_labels, pred_labels, labels=[0, 1, 2])
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=['Entailed', 'Neutral', 'Contradiction'])
+
+        # Plot the confusion matrix
+        disp.plot(cmap=plt.cm.Blues)
+        plt.title("Confusion Matrix on SNLI Validation Set")
+        plt.show()
+
+        # Save confusion matrix as an image
+        plt.savefig(os.path.join(training_args.output_dir, "confusion_matrix.png"))
 
         os.makedirs(training_args.output_dir, exist_ok=True)
 
@@ -197,20 +210,12 @@ def main():
             json.dump(results, f)
 
         with open(os.path.join(training_args.output_dir, 'eval_predictions.jsonl'), encoding='utf-8', mode='w') as f:
-            if args.task == 'qa':
-                predictions_by_id = {pred['id']: pred['prediction_text'] for pred in eval_predictions.predictions}
-                for example in eval_dataset:
-                    example_with_prediction = dict(example)
-                    example_with_prediction['predicted_answer'] = predictions_by_id[example['id']]
-                    f.write(json.dumps(example_with_prediction))
-                    f.write('\n')
-            else:
-                for i, example in enumerate(eval_dataset):
-                    example_with_prediction = dict(example)
-                    example_with_prediction['predicted_scores'] = eval_predictions.predictions[i].tolist()
-                    example_with_prediction['predicted_label'] = int(eval_predictions.predictions[i].argmax())
-                    f.write(json.dumps(example_with_prediction))
-                    f.write('\n')
+            for i, example in enumerate(eval_dataset):
+                example_with_prediction = dict(example)
+                example_with_prediction['predicted_scores'] = eval_predictions.predictions[i].tolist()
+                example_with_prediction['predicted_label'] = int(eval_predictions.predictions[i].argmax())
+                f.write(json.dumps(example_with_prediction))
+                f.write('\n')
 
 
 if __name__ == "__main__":
