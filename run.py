@@ -199,10 +199,9 @@ def main():
         # Plot the confusion matrix
         disp.plot(cmap=plt.cm.Blues)
         plt.title("Confusion Matrix on SNLI Validation Set")
+        plt.ylabel("True Label")  # Add y-axis label
+        plt.xlabel("Predicted Label")  # Optional: Add x-axis label for clarity
         plt.show()
-
-        # Save confusion matrix as an image
-        plt.savefig(os.path.join(training_args.output_dir, "confusion_matrix.png"))
 
         os.makedirs(training_args.output_dir, exist_ok=True)
 
