@@ -208,7 +208,7 @@
 {"premise": "A blond woman in a white cutoff shirt and jeans is walking.", "hypothesis": "A blond woman is approaching a gas station.", "label": 1}  // Synonym substitution
 {"premise": "There are two men playing college basketball, one in light blue and one in white, and fans are looking on.", "hypothesis": "Are those two men playing game?", "label": 0}  // Syntactic rephrasing
 {"premise": "A green bike is parked next to a door.", "hypothesis": "The bicycle is placed outdoors.", "label": 0}  // Synonym substitution
-{"premise": "A man is wearing a blue button-down shirt talking to media during a crowded protest.", "hypothesis": "The man is George Washington.", "label": 2}  // Semantic Shift 
+{"premise": "A man is wearing a blue button-down shirt talking to media during a crowded protest.", "hypothesis": "The man is George Washington.", "label": 2}  // Semantic shift 
 {"premise": "A busy street full of shops and people holding hands and walking.", "hypothesis": "Couples are strolling and browsing shops.", "label": 1}  // Syntactic rephrasing
 {"premise": "Gymnast does a flip on blue flooring.", "hypothesis": "A gymnast trains for the national competition.", "label": 1}  // Semantic shift
 {"premise": "A man and three kids walk up a paved hill.", "hypothesis": "After school, the father walks his children home.", "label": 1}  // Syntactic rephrasing
