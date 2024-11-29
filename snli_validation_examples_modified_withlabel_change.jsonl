@@ -2,7 +2,7 @@
 {"premise": "A person in a blue plaid shirt is writing on a chalkboard.", "hypothesis": "The person is drawing on the chalkboard.", "label": 0}  // Synonym substitution
 {"premise": "A man in a white shirt riding a bike down the pavement.", "hypothesis": "The white shirt is worn by the man.", "label": 0}  // Syntactic rephrasing
 {"premise": "A sitting man is spraying a squirt bottle at a pedestrian while holding an umbrella over his head.", "hypothesis": "A paper was read by a man.", "label": 2}  // Syntactic rephrasing
-{"premise": "Two backpackers look at scenic mountains.", "hypothesis": "Two guys are not backpacking on Mars.", "label": 2}  // Semantic shift
+{"premise": "Two backpackers look at scenic mountains.", "hypothesis": "Two guys are not backpacking on Mars.", "label": 1}  // Semantic shift
 {"premise": "A woman in a green shirt and jeans throws a spear toward a target in the background painted with a carrot across a parking lot", "hypothesis": "In the spear throwing contest, a woman participates.", "label": 1}  // Syntactic rephrasing
 {"premise": "A man smiles while he holds a newborn in a church pew.", "hypothesis": "At chruch a woman sits down holding a baby.", "label": 2}  // Syntactic rephrasing
 {"premise": "A busy kitchen preparing for the afternoon rush.", "hypothesis": "They are cooking lunch.", "label": 1}  // Synonym substitution
@@ -12,14 +12,14 @@
 {"premise": "One woman with a dark coat on walking by herself in a city.", "hypothesis": "In the building is a woman standing.", "label": 0}  // Syntactic rephrasing
 {"premise": "Five people are sitting on horses at a rodeo.", "hypothesis": "Several people are sitting on horses.", "label": 0}  // Synonym substitution
 {"premise": "Four females wearing helmets are riding on an ATV.", "hypothesis": "Driving all terrain vehicles are four women.", "label": 1}  // Syntactic rephrasing
-{"premise": "Two men and three women are sitting at a rectangular wooden table drinking beer from glasses of various shapes.", "hypothesis": "A lrge group of people having drinks.", "label": 2}  // Semantic shift
+{"premise": "Two men and three women are sitting at a rectangular wooden table drinking beer from glasses of various shapes.", "hypothesis": "A large group of people having drinks.", "label": 2}  // Semantic shift
 {"premise": "There is a teen boy and a younger boy with the same shirts on in a room full of people.", "hypothesis": "People are in a space.", "label": 0}  // Synonym substitution
 {"premise": "A little girl in a pink Dora shirt with a pink hat on and a pink lei around her neck is cleaning some rocks with a toothbrush in a white plastic tub.", "hypothesis": "The girl has red hair.", "label": 1}  // Semantic shift
 {"premise": "Dog herding cows", "hypothesis": "Cats are napping inside the room.", "label": 0}  // Synonym substitution
 {"premise": "A man in a light colored uniform is outside an Asian restaurant cleaning the display window which features exotic foods hanging on hooks.", "hypothesis": "A man has a light orange colored uniform.", "label": 2}  // Semantic shift
 {"premise": "In a Little League baseball game, the batter watches as the ball he has just hit flies off toward right field, with the catcher looking on.", "hypothesis": "The ball flys towards right field as the batter watches.", "label": 2}  // Syntactic rephrasing
 {"premise": "A small group of young black men, some in traditional African dress, are assembled outdoors.", "hypothesis": "They are performing a spiritual ceremony.", "label": 1}  // Synonym substitution
-{"premise": "a man plays his guitar on the street.", "hypothesis": "The man is throwing money on the street.", "label": 1}  // Semantic shift
+{"premise": "a man plays his guitar on the street.", "hypothesis": "The man is throwing money on the street.", "label": 2}  // Semantic shift
 {"premise": "An elder bearded man having a rest in a dilapidated building.", "hypothesis": "The old man is in the ancient ruin dozing off.", "label": 2}  // Syntactic rephrasing
 {"premise": "A man is putting on a yellow necktie while another man stands to his right side watching him.", "hypothesis": "A man puts on a necktie.", "label": 0}  // Synonym substitution
 {"premise": "Lonely woman eats alone again, chatting with her internet boyfriend at a diner.", "hypothesis": "At a diner, a woman is eating her meal.", "label": 0}  // Syntactic rephrasing
@@ -41,7 +41,7 @@
 {"premise": "Three children, two boys and one girl, are standing behind bars with their mouths open like they are screaming.", "hypothesis": "The bars are made of candy.", "label": 2}  // Synonym substitution
 {"premise": "A young woman seated at a table on what appears to be a backyard deck holds a toddler, giving him a toy or bottle of some sort, while smiling into the camera.", "hypothesis": "She is the boy's relative.", "label": 1}  // Synonym substitution
 {"premise": "Woman with headscarf and girl in red costume dress walk through urban area.", "hypothesis": "The woman is not out in a field.", "label": 2}  // Semantic shift
-{"premise": "A young girl throws sand toward the ocean.", "hypothesis": "The girl is flinging sand into the ocean.", "label": 0}  // Synonym substitution
+{"premise": "A young girl throws sand toward the ocean.", "hypothesis": "The girl is flinging sand into the ocean.", "label": 0}  // Synonym substitution       
 {"premise": "A football player in a blue and yellow uniform is tackling another player in a white and gold uniform.", "hypothesis": "The football game is the last of the season.", "label": 1}  // Semantic shift
 {"premise": "A football player in a blue \"Rams\" jersey runs with a football on a field, as another player in a white jersey falls in an attempt to tackle him.", "hypothesis": "On the field are football players.", "label": 0}  // Syntactic rephrasing
 {"premise": "A welder is working outside by some concrete ruble", "hypothesis": "After the accident the worker is welding the concrete stucture back together.", "label": 1}  // Syntactic rephrasing
@@ -64,7 +64,7 @@
 {"premise": "Woman driving in a red convertible with another girl in the passenger seat and a guy in a suit in the backseat, driving past a group of people.", "hypothesis": "There are three people driving in a car past other people.", "label": 0}  // Synonym substitution
 {"premise": "A child in a red jacket, waist deep in a pit on the beach.", "hypothesis": "On the beach there is a child.", "label": 0}  // Syntactic rephrasing
 {"premise": "A man standing a busy European town square with a tall placard sign printed with biblical phrases.", "hypothesis": "The person who holds religious information is at the main location of an urban center .", "label": 0}  // Synonym substitution
-{"premise": "A guy in a robe sitting on the edge of a hot tub smiling.", "hypothesis": "The man hates the hot tub.", "label": 1}  // Semantic shift
+{"premise": "A guy in a robe sitting on the edge of a hot tub smiling.", "hypothesis": "The man hates the hot tub.", "label": 2}  // Semantic shift
 {"premise": "A frightened boy is carrying a hammer, ready to defend himself.", "hypothesis": "Swimming in the ocean is the boy.", "label": 2}  // Syntactic rephrasing
 {"premise": "A boy is posing next to his scooter.", "hypothesis": "For his birthday, the boy received a scooter.", "label": 1}  // Syntactic rephrasing
 {"premise": "A man wearing a brown shirt and green pans is pulling a rickshaw down a street", "hypothesis": "Behind him was a man pulling a rickshaw.", "label": 0}  // Syntactic rephrasing
@@ -102,11 +102,11 @@
 {"premise": "Several children are standing in a house looking out the window.", "hypothesis": "Playing video games, several children gathered around.", "label": 2}  // Syntactic rephrasing
 {"premise": "A crowd of people are surrounding a street performance, there are buildings in the background.", "hypothesis": "A crowd of people are waiting for a train", "label": 2}  // Semantic shift
 {"premise": "A tent advertising Surfer Magazine for the 25th annual Longboard Classic on the beach surrounded by palm trees.", "hypothesis": "The tent is advertising a community health event.", "label": 2}  // Synonym substitution
-{"premise": "Three dogs drinking water at a public spigot.", "hypothesis": "Three dogs are not running through the arctic.", "label": 2}  // Semantic shift
+{"premise": "Three dogs drinking water at a public spigot.", "hypothesis": "Three dogs are not running through the arctic.", "label": 1}  // Semantic shift
 {"premise": "Children playing on a playground.", "hypothesis": "Kids are enjoying recess outdoors.", "label": 1}  // Synonym substitution
 {"premise": "A woman wearing a scarf, hat, and coat, holding a shopping bag is looking at her phone while standing in front of a store.", "hypothesis": "The woman is talking on her phone.", "label": 1}  // Syntactic rephrasing
 {"premise": "A schoolgirl wearing a white dress, blue-striped knee socks, a blue tie, and braids, smiles in front of a line of her classmates.", "hypothesis": "After their field trip, a line of schoolchildren are waiting to board a bus.", "label": 1}  // Syntactic rephrasing
-{"premise": "A man sits as a man behind him washes a bus.", "hypothesis": "The boss teaches a man how to wash the bus while the other sits.", "label": 1}  // Semantic shift
+{"premise": "A man sits as a man behind him washes a bus.", "hypothesis": "The boss teaches a man how to wash the bus while the other sits.", "label": 0}  // Semantic shift
 {"premise": "Man walking in front of Queen and Portland Lofts and Condominiums.", "hypothesis": "A man is relaxing in a park nearby.", "label": 2}  // Semantic shift
 {"premise": "A woman wearing a white baseball cap purple coat holding a poster.", "hypothesis": "A woman is holding a sign, cheering for her favorite team.", "label": 1}  // Synonym substitution
 {"premise": "A dog with big ears holds a ball in his mouth.", "hypothesis": "The dog has large ears.", "label": 2}  // Synonym substitution
@@ -141,7 +141,7 @@
 {"premise": "Several people, including a boy in a striped shirt walk on a concrete path away from a body of water.", "hypothesis": "Individuals are strolling outside.", "label": 0}  // Synonym substitution
 {"premise": "Women standing at a podium with a crowd and building in the background.", "hypothesis": "A woman stands at a podium with a building behind her.", "label": 0}  // Syntactic rephrasing
 {"premise": "A person wearing sunglasses, a visor, and a British flag is carrying 6 Heineken bottles.", "hypothesis": "The person with a flag and sunglasses carries beer bottles.", "label": 0}  // Syntactic rephrasing
-{"premise": "Two orthodox Jews, one male, one female, are shown in traditional dress in a sidewalk scene.", "hypothesis": "Two orthodox Jews observe a Jewish holiday outdoors.", "label": 2}  // Semantic shift
+{"premise": "Two orthodox Jews, one male, one female, are shown in traditional dress in a sidewalk scene.", "hypothesis": "Two orthodox Jews observe a Jewish holiday outdoors.", "label": 0}  // Semantic shift
 {"premise": "A lady dances in a polka dot dress and a head of flowers with a fan clasped in her hand while others are looking in a different direction with two men holding onto a ladder and others discussing.", "hypothesis": "A woman is dancing while others deliberately ignore her.", "label": 1}  // Synonym substitution
 {"premise": "A woman in a dark blue, and white sweater, walks with her son, down a street.", "hypothesis": "On the street, a woman and her son are taking a walk.", "label": 0}  // Syntactic rephrasing
 {"premise": "Two young boys of opposing teams play football, while wearing full protection uniforms and helmets.", "hypothesis": "Young boys compete in a football game.", "label": 0}  // Synonym substitution
@@ -196,7 +196,7 @@
 {"premise": "Four female children gather around a brown table to paint.", "hypothesis": "The girls are gathered inside to play.", "label": 1}  // Semantic shift
 {"premise": "A woman in a patterned shirt hands a plate of food to another woman in an apron, while two women work in the background.", "hypothesis": "A group of women are collaborating to serve food.", "label": 0}  // Synonym substitution
 {"premise": "Two men clutch each other as they stumble backwards while looking up in front of a store.", "hypothesis": "In front of a store, two men are staring at the store.", "label": 0}  // Syntactic rephrasing
-{"premise": "A man and a woman is walking with a dog across a beach", "hypothesis": "The couple are not alone on the beach.", "label": 2}  // Semantic shift
+{"premise": "A man and a woman is walking with a dog across a beach", "hypothesis": "The couple are not alone on the beach.", "label": 0}  // Semantic shift
 {"premise": "A woman in a blue shirt stands with her hands on her hips.", "hypothesis": "The lady in the blue shirt is feeling her body.", "label": 0}  // Synonym substitution
 {"premise": "A boy in a red shirt with arms outstretched on the side of hill.", "hypothesis": "A girl is performing on a hillside.", "label": 2}  // Synonym substitution
 {"premise": "A man in red and black about to strike a tennis ball.", "hypothesis": "A man is about to hit a golf ball.", "label": 2}  // Syntactic rephrasing
@@ -273,7 +273,7 @@
 {"premise": "A male soccer player has his foot extended as if he has just kicked the soccer ball while the ball flies through the air.", "hypothesis": "The soccer ball was kicked towards the goal by the man.", "label": 1}  // Syntactic rephrasing
 {"premise": "Football players playing in mud.", "hypothesis": "Football players are playing checkers.", "label": 2}  // Semantic shift
 {"premise": "A man in a blue shirt leans on a wall beside a road with a blue van and red car with water in the background.", "hypothesis": "The man in the blue shirt is sitting on a stall.", "label": 2}  // Synonym substitution
-{"premise": "Several horsemen are riding past each other carrying flags.", "hypothesis": "The men are walking their horses to the starting line.", "label": 1}  // Semantic shift
+{"premise": "Several horsemen are riding past each other carrying flags.", "hypothesis": "The men are walking their horses to the starting line.", "label": 2}  // Semantic shift
 {"premise": "Man biking in half pipe with graffiti on cement.", "hypothesis": "Man cycling with his friends in half pipe covered in graffiti.", "label": 1}  // Synonym substitution
 {"premise": "A man in a white and blue jacket is talking to a girl in a black jacket.", "hypothesis": "The daughter gets advice from her father.", "label": 1}  // Syntactic rephrasing
 {"premise": "A man in an orange vest is on the sidewalk playing a guitar and singing while others are walking down the sidewalk.", "hypothesis": "A man wearing a purple bathrobe is outside his home singing.", "label": 2}  // Semantic shift
@@ -282,7 +282,7 @@
 {"premise": "Man in skeleton-printed leather outfit sitting astride a red motorcycle.", "hypothesis": "The man is not wearing any clothes.", "label": 2}  // Syntactic rephrasing
 {"premise": "A man napping on the ground with a shirt over his eyes with a person standing beside him.", "hypothesis": "Two people staying silent.", "label": 2}  // Semantic shift
 {"premise": "A firefighter, in full uniform, looks off into the distance.", "hypothesis": "The firefighter is about to douse the fire.", "label": 1}  // Synonym substitution
-{"premise": "A basset hound is tied to a doorway in an alley in front of a man and woman.", "hypothesis": "The dog is not on the moon.", "label": 2}  // Semantic shift
+{"premise": "A basset hound is tied to a doorway in an alley in front of a man and woman.", "hypothesis": "The dog is not on the moon.", "label": 1}  // Semantic shift
 {"premise": "A man playing a banjo near a tree at an outdoor event.", "hypothesis": "The man playing the banjo is performing to earn money.", "label": 1}  // Synonym substitution
 {"premise": "A woman sitting eating a sandwich.", "hypothesis": "A woman eats a vegetable dish.", "label": 2}  // Synonym substitution
 {"premise": "Two boys sitting and eating ice cream.", "hypothesis": "The boys are wide awake in their beds.", "label": 2}  // Semantic shift
@@ -291,10 +291,10 @@
 {"premise": "A crowd of people with a lady with a bright orange shirt and another lady in black have their backs to the camera.", "hypothesis": "Looking at a parade in the street, people tunred away from the camera.", "label": 1}  // Syntactic rephrasing
 {"premise": "two women in lab coats looking on a image projected on the wall", "hypothesis": "Some women are in a laboratory.", "label": 0}  // Synonym substitution
 {"premise": "A boy is standing at the edge of a wave with the sun setting or rising in the background.", "hypothesis": "For the first time, the boy goes surfing.", "label": 1}  // Syntactic rephrasing
-{"premise": "A girl is feeding a goat.", "hypothesis": "The girl hates goats.", "label": 1}  // Semantic shift
+{"premise": "A girl is feeding a goat.", "hypothesis": "The girl hates goats.", "label": 2}  // Semantic shift
 {"premise": "Gymnast photographed in mid flip.", "hypothesis": "The balance beam is where the gymnast takes a nap.", "label": 2}  // Syntactic rephrasing
 {"premise": "A child holds sparklers in the dark.", "hypothesis": "A child holds fireworks at night.", "label": 0}  // Synonym substitution
-{"premise": "A crowd of people in a lightly snow covered opening with trees to the left and buildings in the background.", "hypothesis": "The people are at an outdoor gathering.", "label": 2}  // Semantic shift
+{"premise": "A crowd of people in a lightly snow covered opening with trees to the left and buildings in the background.", "hypothesis": "The people are at an outdoor gathering.", "label": 0}  // Semantic shift
 {"premise": "Seated street musician in black derby plays wind instrument with no one listening or watching.", "hypothesis": "The man is playing a musical instrument.", "label": 1}  // Synonym substitution
 {"premise": "Woman with a basket of candy in her hand.", "hypothesis": "The woman is carrying something.", "label": 0}  // Synonym substitution
 {"premise": "The woman in the black shirt attempts to find her bike in the midst of the crowded street.", "hypothesis": "On the crowded street, there is a woman.", "label": 0}  // Syntactic rephrasing
@@ -320,17 +320,17 @@
 {"premise": "A classroom full of students is looking in the same direction inside a bamboo structure.", "hypothesis": "A school classroom looking for their home is full of elephants.", "label": 2}  // Syntactic rephrasing
 {"premise": "A man wearing blue jeans and a black shirt is talking to a man wearing white shorts while they are sitting outside in folding chairs on a patio.", "hypothesis": "A person wearing denim pants.", "label": 0}  // Synonym substitution
 {"premise": "A brown dog is about to catch a treat.", "hypothesis": "A cat sit theres licking itself.", "label": 2}  // Syntactic rephrasing
-{"premise": "A singer is performing before a small crowd outside.", "hypothesis": "A local favorite dances for the first outdoor wedding of the season.", "label": 1}  // Semantic shift
+{"premise": "A singer is performing before a small crowd outside.", "hypothesis": "A local favorite dances for the first outdoor wedding of the season.", "label": 2}  // Semantic shift
 {"premise": "A man wearing a green shirt and a leaf on his head, runs in a race with a bottle of water in his hand and his eyes closed.", "hypothesis": "The person running a tough race was a man.", "label": 0}  // Syntactic rephrasing
-{"premise": "two girls sitting by a tree while playing.", "hypothesis": "The girls are close to a tree.", "label": 2}  // Semantic shift
-{"premise": "a man scales the large rock.", "hypothesis": "The man is climbing indoors.", "label": 0}  //  Semantic shift
-{"premise": "A group of men are playing basketball as the sun sets.", "hypothesis": "There are two men with a baseball.", "label": 1}  // Semantic shift
+{"premise": "two girls sitting by a tree while playing.", "hypothesis": "The girls are close to a tree.", "label": 0}  // Semantic shift
+{"premise": "a man scales the large rock.", "hypothesis": "The man is climbing indoors.", "label": 2}  //  Semantic shift
+{"premise": "A group of men are playing basketball as the sun sets.", "hypothesis": "There are two men with a baseball.", "label": 2}  // Semantic shift
 {"premise": "An outdoor rodeo, with a cowboy in a red shirt riding a bucking horse while others watch from the sidelines.", "hypothesis": "A cowboy is wearing a red top.", "label": 0}  // Synonym substitution
 {"premise": "A young boy wearing blue shorts is splashing is a blue kiddie pool.", "hypothesis": "The young boy is soaked.", "label": 0}  // Synonym substitution
 {"premise": "A group of people prepare hot air balloons for takeoff.", "hypothesis": "Outside people are gathering around.", "label": 0}  // Syntactic rephrasing
 {"premise": "A person in a blue shirt and tan shorts getting ready to roll a bowling ball down the alley.", "hypothesis": "The woman is enjoying an evening bowling.", "label": 1}  // Synonym substitution
 {"premise": "An African American man getting his haircut by another man.", "hypothesis": "The man cutting another mans hair is of Spanish descent.", "label": 1}  // Syntactic rephrasing
-{"premise": "The kid is wearing a blue jacket and standing in shallow beach water.", "hypothesis": "The kid is swimming in the shallow ocean", "label": 2}  // Semantic shift
+{"premise": "The kid is wearing a blue jacket and standing in shallow beach water.", "hypothesis": "The kid is swimming in the shallow ocean", "label": 0}  // Semantic shift
 {"premise": "Two horse riders and three walkers are going down a dusty path.", "hypothesis": "Five people are sitting.", "label": 2}  // Synonym substitution
 {"premise": "A man standing at the front of the room is pointing up while several people who are seated look towards him.", "hypothesis": "A man points upwards while standing in a room.", "label": 0}  // Syntactic rephrasing
 {"premise": "Several people wait to checkout inside a store with a warehouse looking ceiling.", "hypothesis": "Home depot is making everybody wait with good reason.", "label": 1}  // Semantic shift
@@ -372,7 +372,7 @@
 {"premise": "A drummer plays the drums, while wearing a black dress shirt, and black and gray striped tie.", "hypothesis": "The woman who is playing the piano is wearing a black dress.", "label": 2}  // Syntactic rephrasing
 {"premise": "A man in a lab coat looking into a microscope with containers in the background.", "hypothesis": "A scientist in a lab coat.", "label": 0}  // Synonym substitution
 {"premise": "Several men in protective suits are rolling a man on a gurnee.", "hypothesis": "A was being transported on a gurney.", "label": 0}  // Syntactic rephrasing
-{"premise": "Two guys are on a baseball field and one is about to hit the base.a group", "hypothesis": "The guys are not in the MLB.", "label": 1}  // Semantic shift
+{"premise": "Two guys are on a baseball field and one is about to hit the base.a group", "hypothesis": "The guys are not in the MLB.", "label": 2}  // Semantic shift
 {"premise": "A band is playing on stage at a concert and the attendants are dancing to the music.", "hypothesis": "No one was dancing.", "label": 2}  // Syntactic rephrasing
 {"premise": "A man with a fist shares his ego with another man in a brown shirt.", "hypothesis": "The two men refused to share a meal.", "label": 2}  // Semantic shift
 {"premise": "A man in a white button-up shirt looks to the side while sitting at a table by the street.", "hypothesis": "A man begins to get anxious while waiting for his date to arrive.", "label": 1}  // Synonym substitution
@@ -396,7 +396,7 @@
 {"premise": "Two men in animal print pajama bottoms sleep on a bed.", "hypothesis": "Two men are wearing sleepwear.", "label": 0}  // Synonym substitution
 {"premise": "A husky and a black cat nuzzling.", "hypothesis": "A cat and a dog are together.", "label": 0}  // Syntactic rephrasing
 {"premise": "The woman is holding the hand of the little girl in the red dress with the polka-dotted skirt.", "hypothesis": "A young girl wearing a red dress holds a woman's hand.", "label": 0}  // Synonym substitution
-{"premise": "Girl in purple jacket leaning against a wall.", "hypothesis": "A lady already passed the line at the concert.", "label": 1}  // Semantic shift
+{"premise": "Girl in purple jacket leaning against a wall.", "hypothesis": "A lady already passed the line at the concert.", "label": 2}  // Semantic shift
 {"premise": "A boy in an innertube in the pool splashing and smiling.", "hypothesis": "A boy is having fun at the pool.", "label": 0}  // Synonym substitution
 {"premise": "This football team wears red shirts and red helmets.", "hypothesis": "The team is playing in the field, outdoors.", "label": 1}  // Syntactic rephrasing
 {"premise": "Couple walking on the beach.", "hypothesis": "The couple are relaxing on the sand.", "label": 2}  // Synonym substitution
@@ -420,7 +420,7 @@
 {"premise": "A woman in a gray shirt working on papers at her desk.", "hypothesis": "As a result of her boss scolding, a lady shows her frustration.", "label": 2}  // Semantic shift
 {"premise": "Woman in a dress standing in front of a line of a clothing line, with clothes hanging on the line.", "hypothesis": "A woman in a dress is waiting in front of a line.", "label": 0}  // Synonym substitution
 {"premise": "One little toddler wearing blue pajamas and a little girl wearing red pajamas opening presents on christmas day.", "hypothesis": "Opening their presents, the two small children are unhappy.", "label": 1}  // Syntactic rephrasing
-{"premise": "A woman crossing a busy downtown street.", "hypothesis": "A lady is passing her ride down the street.", "label": 2}  // Semantic shift
+{"premise": "A woman crossing a busy downtown street.", "hypothesis": "A lady is passing her ride down the street.", "label": 0}  // Semantic shift
 {"premise": "Making something tasty hope you like lemons!", "hypothesis": "A lady sees a hole in her dress and is sewing it up.", "label": 2}  // Syntactic rephrasing
 {"premise": "The little girl in yellow is touching the dad who has shaving cream on his face.", "hypothesis": "The father's head is being shaved by his little girl.", "label": 2}  // Syntactic rephrasing
 {"premise": "A woman in a purple shirt buying food from a street vendor.", "hypothesis": "A man returns a tv at Best Buy.", "label": 2}  // Semantic shift
@@ -470,18 +470,18 @@
 {"premise": "A man is jumping over a rock.", "hypothesis": "A man is jumping.", "label": 0}  // Syntactic rephrasing
 {"premise": "A group of children of varying ages are sitting at large tables eating.", "hypothesis": "The kids are in the cafeteria.", "label": 1}  // Synonym substitution
 {"premise": "A group of people are standing in front of parked bicycles on a corner with various carrying bags on the ground.", "hypothesis": "Next to the group of people on the ground are carrying bags.", "label": 0}  // Syntactic rephrasing
-{"premise": "Several women with long hair and mini-dresses walk together.", "hypothesis": "A group of ladies stay in the hair salon.", "label": 1}  // Semantic shift
+{"premise": "Several women with long hair and mini-dresses walk together.", "hypothesis": "A group of ladies stay in the hair salon.", "label": 2}  // Semantic shift
 {"premise": "A skateboarder does a trick at a skate park.", "hypothesis": "The skateboarder is with his girlfriend at a concert.", "label": 2}  // Syntactic rephrasing
 {"premise": "A boy poses in karate form and uniform.", "hypothesis": "A girl displays her girl scouts cookies.", "label": 2}  // Synonym substitution
 {"premise": "A man is creating a sand painting on the floor.", "hypothesis": "A man is crafting art.", "label": 0}  // Synonym substitution
-{"premise": "Two men, one with a black shirt and the other with a white shirt, are kicking each other without making contact.", "hypothesis": "The men are discussing over a girl.", "label": 1}  // Semantic shift
+{"premise": "Two men, one with a black shirt and the other with a white shirt, are kicking each other without making contact.", "hypothesis": "The men are discussing over a girl.", "label": 2}  // Semantic shift
 {"premise": "three children are locked in a cage.", "hypothesis": "In the cage there are only two children.", "label": 2}  // Syntactic rephrasing
 {"premise": "A party is held and many people mingle and gather for the occasion.", "hypothesis": "Many people are socializing at a party.", "label": 0}  // Synonym substitution
 {"premise": "Five people in cowboy hats are on horses at a rodeo show.", "hypothesis": "The riders's horses are running off without them.", "label": 2}  // Syntactic rephrasing
 {"premise": "A lady with red-hair peeking into the back of a car.", "hypothesis": "A lady is staring at a fire truck.", "label": 2}  // Synonym substitution
 {"premise": "A train is being worked on buy three men.", "hypothesis": "The men are wearing footwear.", "label": 1}  // Synonym substitution
 {"premise": "A live band on a lawn jamming out.", "hypothesis": "The holiday crowd is jamming out to the live band on the lawn.", "label": 1}  // Syntactic rephrasing
-{"premise": "An elderly saxophonist performing at an outdoor event.", "hypothesis": "A world reknown musician performs his last performance at an indoor music festival", "label": 1}  // Semantic shift
+{"premise": "An elderly saxophonist performing at an outdoor event.", "hypothesis": "A world reknown musician performs his last performance at an indoor music festival", "label": 2}  // Semantic shift
 {"premise": "A girl dressed in a pink shirt, jeans, and flip-flops sitting down playing with a lollipop machine.", "hypothesis": "A playful person in a shirt.", "label": 1}  // Synonym substitution
 {"premise": "Woman wearing a white donkey costume while talking to a man.", "hypothesis": "A woman is wearing unusual clothing.", "label": 0}  // Synonym substitution
 {"premise": "A woman is holding a baby by a window.", "hypothesis": "The woman is not holding anything.", "label": 2}  // Syntactic rephrasing
@@ -494,16 +494,16 @@
 {"premise": "A man with a tattoo on his left arm flips his food into the air with his frying pan.", "hypothesis": "A kid preparing lunch.", "label": 2}  // Synonym substitution
 {"premise": "A man perched on a row of aquariums is using a net to scoop a fish from another aquarium.", "hypothesis": "Next to the aquariums is a standing man.", "label": 0}  // Syntactic rephrasing
 {"premise": "A little girl and lady wearing face paint and costumes are among others holding orange balloons and an event.", "hypothesis": "At a local carnival, a mother and her little girl are getting their faces painted.", "label": 1}  // Syntactic rephrasing
-{"premise": "A woman in a white dress walking down the street with a woman in a purple shirt crossing the street.", "hypothesis": "The women do not knoch each other.", "label": 1}  // Semantic shift
+{"premise": "A woman in a white dress walking down the street with a woman in a purple shirt crossing the street.", "hypothesis": "The women do not know each other.", "label": 1}  // Semantic shift
 {"premise": "Two people ride yellow motorcycles.", "hypothesis": "Two people are riding stallions.", "label": 2}  // Semantic shift
 {"premise": "A group of people sit before a campfire.", "hypothesis": "An elephant sits on a hound.", "label": 2}  // Synonym substitution
 {"premise": "A little boy in a blue shirt holding a toy.", "hypothesis": "Things are being light on fire by the boy dressed in red.", "label": 2}  // Syntactic rephrasing
 {"premise": "A young man in jogging slacks is checking information on his mobile devise while listening to something on a crowded commuter rail car.", "hypothesis": "A man in running pants checks his device.", "label": 0}  // Synonym substitution
 {"premise": "Black dog with white puppies laying on the floor.", "hypothesis": "A dog beside some kittens.", "label": 2}  // Synonym substitution
-{"premise": "Several smiling people of varying ages sitting around a table with glasses of beer in front of them.", "hypothesis": "Several people are dismayed their company going public.", "label": 1}  // Semantic shift
+{"premise": "Several smiling people of varying ages sitting around a table with glasses of beer in front of them.", "hypothesis": "Several people are dismayed their company going public.", "label": 2}  // Semantic shift
 {"premise": "A puppet show consisting of humans standing on tall sticks.", "hypothesis": "How the doll show works.", "label": 0}  // Synonym substitution
 {"premise": "Four people in a kitchen", "hypothesis": "Four people in a mess cooking.", "label": 0}  // Synonym substitution
-{"premise": "There is a woman here in a children's room, wearing a red vest, with her hand in a fake shark's mouth.", "hypothesis": "The woman is concealing a shark bite.", "label": 1}  // Semantic shift
+{"premise": "There is a woman here in a children's room, wearing a red vest, with her hand in a fake shark's mouth.", "hypothesis": "The woman is concealing a shark bite.", "label": 2}  // Semantic shift
 {"premise": "A male soccer player has his foot extended as if he has just kicked the soccer ball while the ball flies through the air.", "hypothesis": "Laying on the couch is a man.", "label": 2}  // Syntactic rephrasing
 {"premise": "A man wearing a white shirt and black shorts in competing in pole vault.", "hypothesis": "The person pole vaulting is a man.", "label": 0}  // Syntactic rephrasing
 {"premise": "A woman in a blue dress is sweeping the floor in a cobblestone road", "hypothesis": "The woman is cleans in preparation.", "label": 1}  // Synonym substitution
@@ -512,10 +512,10 @@
 {"premise": "The woman in the blue skirt is sleeping on a cardboard box under a picture of Mary and baby Jesus.", "hypothesis": "A homeless woman sleeps under the watchful gaze of the Blessed Mother.", "label": 0}  // Synonym substitution
 {"premise": "There is a woman here in a children's room, wearing a red vest, with her hand in a fake sharks mouth.", "hypothesis": "In the children's room, a woman wearing a red vest has her hand inside a fake shark's mouth.", "label": 0}  // Syntactic rephrasing
 {"premise": "A man riding a bicycle on pavement with graffiti.", "hypothesis": "A man is outdoors.", "label": 0}  // Synonym substitution
-{"premise": "A young boy in a cowboy hat and holding some food sits in the back of a small vehicle while an adult leans over in the background next to a large blue device displaying the words 99% Angel.", "hypothesis": "A young boy in a cowboy hat is throwing a hamburger.", "label": 1}  // Semantic shift
+{"premise": "A young boy in a cowboy hat and holding some food sits in the back of a small vehicle while an adult leans over in the background next to a large blue device displaying the words 99% Angel.", "hypothesis": "A young boy in a cowboy hat is throwing a hamburger.", "label": 2}  // Semantic shift
 {"premise": "A woman in a pink shirt is painting the last two stars on a painting of the American flag.", "hypothesis": "The woman paints on it.", "label": 0}  // Syntactic rephrasing
 {"premise": "a skateboard performs a trick off a quarter pipe.", "hypothesis": "A roller board does a trick.", "label": 0}  // Synonym substitution
-{"premise": "A skilled calligrapher is working at his art.", "hypothesis": "The calligrapher is very skilled and wise.", "label": 2}  // Semantic shift
+{"premise": "A skilled calligrapher is working at his art.", "hypothesis": "The calligrapher is very skilled and wise.", "label": 0}  // Semantic shift
 {"premise": "A person is riding his bicycle and is flying through the air on it.", "hypothesis": "Playing at the soccer game is a boy.", "label": 2}  // Syntactic rephrasing
 {"premise": "A crowd standing in a room with their backs to the camera.", "hypothesis": "The crowd in the room is frowning at the camera man.", "label": 2}  // Semantic shift
 {"premise": "A man in a beanie doing a bike trick.", "hypothesis": "The man is inverted.", "label": 1}  // Synonym substitution
@@ -551,7 +551,7 @@
 {"premise": "Group of men sitting at a table turn to have their picture taken.", "hypothesis": "The group of men are posing for a photo.", "label": 0}  // Synonym substitution
 {"premise": "A woman dressed in a black sweater, blue jeans, and golden high heel boots is looking a merchandise in a storefront window.", "hypothesis": "A woman is purchasing purses.", "label": 1}  // Semantic shift
 {"premise": "A group of friends stand around at night while one in a brown coat blows bubbles from a blue container.", "hypothesis": "Everyone seems happy among the group of friends.", "label": 1}  // Syntactic rephrasing
-{"premise": "A woman in a pink shirt is holding a hot air balloon with an American flag on it.", "hypothesis": "A woman let go a hot air balloon on the 4th of July.", "label": 1}  // Semantic shift
+{"premise": "A woman in a pink shirt is holding a hot air balloon with an American flag on it.", "hypothesis": "A woman let go a hot air balloon on the 4th of July.", "label": 2}  // Semantic shift
 {"premise": "Two Children playing baseball at the park.", "hypothesis": "Kids playing baseball.", "label": 0}  // Synonym substitution
 {"premise": "A kid hitting a baseball in a baseball field.", "hypothesis": "The kids practicing for his upcoming game by hitting the ball.", "label": 1}  // Syntactic rephrasing
 {"premise": "A baseball pitcher wearing a purple and white uniform throwing a baseball from the mound.", "hypothesis": "A baseball is being thrown by a pitcher.", "label": 0}  // Syntactic rephrasing
@@ -593,8 +593,8 @@
 {"premise": "A male soccer player has his foot extended as if he has just kicked the soccer ball while the ball flies through the air.", "hypothesis": "The man is outdoors.", "label": 0}  // Synonym substitution
 {"premise": "A woman wading through a pool in front of a waterfall.", "hypothesis": "The woman is not sitting on a rubber floating device in the pool.", "label": 1}  // Semantic shift
 {"premise": "Trucks racing", "hypothesis": "Are there vehicles?", "label": 0}  // Syntactic rephrasing
-{"premise": "A young woman in a green \"Aeropostale\" shirt and a green bracelet with a black purse, looking down with pursed lips.", "hypothesis": "The shirt is green.", "label": 2}  // Semantic shift
+{"premise": "A young woman in a green \"Aeropostale\" shirt and a green bracelet with a black purse, looking down with pursed lips.", "hypothesis": "The shirt is green.", "label": 0}  // Semantic shift
 {"premise": "A crowd of interested people surrounds a man swinging a sledgehammer.", "hypothesis": "A man shows how to use a sledgehammer to the group of people.", "label": 1}  // Syntactic rephrasing
-{"premise": "Several Asian women dressed in black outfits and crowns are holding plates with food on them.", "hypothesis": "The women drop sushi on plates.", "label": 1}  // Semantic shift
+{"premise": "Several Asian women dressed in black outfits and crowns are holding plates with food on them.", "hypothesis": "The women drop sushi on plates.", "label": 2}  // Semantic shift
 {"premise": "Police officer and his motorcycle in a crowd of people at a protest.", "hypothesis": "On the motorcycle is a police officer.", "label": 0}  // Syntactic rephrasing
-{"premise": "Guy hitting a baseball in a field of grass outside.", "hypothesis": "A man gets our of the dugout.", "label": 2}  // Semantic shift
+{"premise": "Guy hitting a baseball in a field of grass outside.", "hypothesis": "A man gets out of the dugout.", "label": 2}  // Semantic shift
