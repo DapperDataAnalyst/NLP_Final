@@ -200,7 +200,7 @@ def main():
 
         # Plot the confusion matrix
         disp.plot(cmap=plt.cm.Blues)
-        plt.title("Confusion Matrix on SNLI Validation Set")
+        # plt.title("Confusion Matrix on SNLI Validation Set")
         plt.ylabel("True Label")  # Add y-axis label
         plt.xlabel("Predicted Label")  # Optional: Add x-axis label for clarity
         plt.show()
