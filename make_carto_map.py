@@ -15,7 +15,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, use_fast=True)
 
     # Load custom dataset
-    dataset_path = "snli_validation_examples_modified.jsonl"
+    dataset_path = "snli_validation_examples.jsonl"
     dataset = datasets.load_dataset("json", data_files=dataset_path)["train"]
 
     # Preprocess dataset
@@ -89,9 +89,9 @@ def main():
     std_devs = np.std(correct_label_probs, axis=1)
 
     # Categorize data points
-    hard_to_learn = (mean_probs < 0.4) & (std_devs < 0.28)
-    easy_to_learn = (mean_probs > 0.7) & (std_devs < 0.28)
-    ambiguous = std_devs >= 0.28
+    hard_to_learn = (mean_probs < 0.36)
+    easy_to_learn = (mean_probs > 0.64) 
+    ambiguous = (mean_probs >= 0.36) & (mean_probs <= 0.64) & (std_devs > 0.3)
 
     # Find Index and return sentences into .jsonl file
     # Save ambiguous points to a .jsonl file
