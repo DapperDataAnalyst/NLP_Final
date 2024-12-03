@@ -3,7 +3,7 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trai
 import numpy as np
 import torch
 import csv
-import matplotlib.pyplot as plt  # Import matplotlib for plotting
+import matplotlib.pyplot as plt
 
 NUM_PREPROCESSING_WORKERS = 2
 
@@ -14,7 +14,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, use_fast=True)
 
     # Load custom dataset
-    dataset_path = "snli_validation_examples_modified.jsonl"
+    dataset_path = "snli_validation_examples.jsonl"
     dataset = datasets.load_dataset("json", data_files=dataset_path)["train"]
 
     # Preprocess dataset
@@ -40,14 +40,14 @@ def main():
         save_strategy="no",
         logging_dir="./logs",
         logging_steps=50,
-        eval_strategy="no",  # Disable evaluation
+        eval_strategy="no",
         save_total_limit=1,
     )
 
     # Preallocate probabilities tensor
     num_examples = len(processed_dataset)
     correct_label_probs = np.zeros((num_examples, 3), dtype=np.float32)  # 3 is the number of classes
-    example_index = 0  # Tracks position in the dataset
+    example_index = 0
 
     def compute_full_label_probs(logits):
         probs = torch.softmax(torch.tensor(logits), dim=-1).numpy()  # Convert logits to probabilities
@@ -55,36 +55,20 @@ def main():
 
     # Custom trainer
     class CustomTrainer(Trainer):
-        def on_epoch_end(self, args, state, control, logs=None):
-            # Print the probabilities of the correct label for all rows at the end of the epoch
-            for i in range(len(correct_label_probs)):
-                correct_label = processed_dataset[i]["label"]  # Get the label from the dataset
-                prob_of_correct_label = correct_label_probs[i, correct_label]  # Get the probability of the correct label
-                print(f"Example {i}: Correct Label = {correct_label}, Probability = {prob_of_correct_label:.4f}")
-
-        def compute_loss(self, model, inputs, return_outputs=False):
+        def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
             nonlocal example_index
-            # Compute outputs and logits
             outputs = model(**inputs)
             logits = outputs.logits
             probs = compute_full_label_probs(logits.detach().cpu().numpy())
 
-            # Store the probability of the correct label in the correct_label_probs array
-            labels = inputs["labels"].cpu().numpy()  # Ensure the tensor is on CPU
+            labels = inputs["labels"].cpu().numpy()
             for i in range(len(labels)):
                 if example_index + i < correct_label_probs.shape[0]:
                     correct_label_probs[example_index + i, labels[i]] = probs[i, labels[i]]
-                else:
-                    # Optionally, handle the situation when the index exceeds the array bounds
-                    print(f"Warning: Index {example_index + i} out of bounds.")
-            
-            # Update the example index
+
             example_index = (example_index + len(labels)) % correct_label_probs.shape[0]
-
-            # Compute loss using the superclass method
-            loss = super().compute_loss(model, inputs, return_outputs=return_outputs)
+            loss = super().compute_loss(model, inputs, return_outputs=return_outputs, **kwargs)
             return (loss, outputs) if return_outputs else loss
-
 
     # Initialize Trainer
     trainer = CustomTrainer(
@@ -97,36 +81,33 @@ def main():
     # Train the model
     trainer.train()
 
-    # Validate shape
-    print(f"Shape of correct_label_probs: {correct_label_probs.shape}")
-
     # Calculate statistics
     mean_probs = np.mean(correct_label_probs, axis=1)
     std_devs = np.std(correct_label_probs, axis=1)
 
-    print(f"Mean Probabilities Across Classes: {mean_probs}")
-    print(f"Standard Deviations Across Classes: {std_devs}")
-
-    # Create list of coordinate pairs (mean, std_dev)
-    coordinate_pairs = list(zip(mean_probs, std_devs))
-
-    # Save the coordinate pairs to a CSV file
-    with open("mean_std_pairs.csv", mode="w", newline="") as file:
-        writer = csv.writer(file)
-        writer.writerow(["Mean Probability", "Standard Deviation"])  # Header
-        for pair in coordinate_pairs:
-            writer.writerow(pair)  # Write each pair as a row
-
-    print("Mean and standard deviation pairs saved to 'mean_std_pairs.csv'.")
+    # Categorize data points
+    hard_to_learn = (mean_probs < 0.4) & (std_devs < 0.28)
+    easy_to_learn = (mean_probs > 0.7) & (std_devs < 0.28)
+    ambiguous = std_devs >= 0.28
 
     # Plotting the scatter plot
-    plt.figure(figsize=(8, 6))
-    plt.scatter(std_devs, mean_probs, color='blue', alpha=0.6)  # Scatter plot
-    # plt.title("Scatter Plot: Mean vs. Standard Deviation of Label Probabilities")
+    plt.figure(figsize=(10, 8))
+    plt.scatter(std_devs[hard_to_learn], mean_probs[hard_to_learn], c='blue', label='Hard-to-Learn', alpha=0.6)
+    plt.scatter(std_devs[easy_to_learn], mean_probs[easy_to_learn], c='red', label='Easy-to-Learn', alpha=0.6)
+    plt.scatter(std_devs[ambiguous], mean_probs[ambiguous], c='green', label='Ambiguous', alpha=0.6)
+
+    # Add labels to regions
+    bb = lambda c: dict(boxstyle="round,pad=0.3", ec=c, lw=2, fc="white")
+    plt.text(0.02, 0.85, "easy-to-learn", fontsize=12, bbox=bb('r'))
+    plt.text(0.02, 0.18, "hard-to-learn", fontsize=12, bbox=bb('b'))
+    plt.text(0.31, 0.5, "ambiguous", fontsize=12, bbox=bb('g'))
+
     plt.xlabel("Variability")
     plt.ylabel("Confidence")
+    plt.title("SNLI-ELECTRA-small Data Map  ")
+    plt.legend()
     plt.grid(True)
-    plt.show()  # Display the plot
+    plt.show()
 
 if __name__ == "__main__":
     main()
