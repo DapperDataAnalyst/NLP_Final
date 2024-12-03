@@ -15,7 +15,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, use_fast=True)
 
     # Load custom dataset
-    dataset_path = "snli_validation_examples.jsonl"
+    dataset_path = "snli_validation_examples_modified.jsonl"
     dataset = datasets.load_dataset("json", data_files=dataset_path)["train"]
 
     # Preprocess dataset
