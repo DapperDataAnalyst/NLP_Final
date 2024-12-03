@@ -4,6 +4,7 @@ import numpy as np
 import torch
 import csv
 import matplotlib.pyplot as plt
+import json
 
 NUM_PREPROCESSING_WORKERS = 2
 
@@ -78,6 +79,8 @@ def main():
         tokenizer=tokenizer,
     )
 
+
+
     # Train the model
     trainer.train()
 
@@ -89,6 +92,20 @@ def main():
     hard_to_learn = (mean_probs < 0.4) & (std_devs < 0.28)
     easy_to_learn = (mean_probs > 0.7) & (std_devs < 0.28)
     ambiguous = std_devs >= 0.28
+
+    # Find Index and return sentences into .jsonl file
+    # Save ambiguous points to a .jsonl file
+    ambiguous_points = []
+    for i in range(len(ambiguous)):
+        if ambiguous[i]:
+            ambiguous_points.append(dataset[i])  # Append the original data point
+
+    output_path = "ambiguous_data_points.jsonl"
+    with open(output_path, "w") as f:
+        for point in ambiguous_points:
+            f.write(json.dumps(point) + "\n")
+
+    print(f"Ambiguous data points saved to '{output_path}'.")
 
     # Plotting the scatter plot
     plt.figure(figsize=(10, 8))
