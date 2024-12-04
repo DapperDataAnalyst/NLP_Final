@@ -81,26 +81,30 @@ def main():
     mean_probs = np.array([point['avg_confidence'] for point in data_map])
     std_devs = np.array([point['variability'] for point in data_map])
 
-    # New categorization to ensure all points are distributed into a category
+    # Smoothened categorization for easy-to-learn, ambiguous, and hard-to-learn
+    # Defining overlapping regions to create a gradient-like categorization
+
     easy_to_learn = [
         point for point in data_map
-        if point['avg_confidence'] > 0.7 and point['variability'] <= 0.2
+        if point['avg_confidence'] > 0.75 and point['variability'] < 0.2
     ]
 
     hard_to_learn = [
         point for point in data_map
-        if point['avg_confidence'] <= 0.4 and point['variability'] <= 0.5
+        if point['avg_confidence'] < 0.45 and point['variability'] < 0.3
     ]
 
+    # For ambiguous points, overlap with both easy-to-learn and hard-to-learn thresholds
     ambiguous = [
         point for point in data_map
-        if point not in easy_to_learn and point not in hard_to_learn
+        if (0.45 <= point['avg_confidence'] <= 0.75) or (0.2 <= point['variability'] <= 0.5)
     ]
 
     # Debug: Print the number of points in each category to confirm distribution
     print(f"Number of easy-to-learn points: {len(easy_to_learn)}")
     print(f"Number of hard-to-learn points: {len(hard_to_learn)}")
     print(f"Number of ambiguous points: {len(ambiguous)}")
+
      # Find Index and return sentences into .jsonl file
     # Save ambiguous points to a .jsonl file
     ambiguous_points = []
@@ -181,7 +185,10 @@ def main():
                 mean_probs[group_mask],
                 c=label_color,
                 marker=marker,
-                alpha=0.6
+                alpha=0.6,
+                s=30,  # Set smaller marker size
+                edgecolors='white',  # Add white border around points
+                linewidth=0.5  # Set width of the border
             )
 
     # Add the custom legend for correctness levels
@@ -198,6 +205,8 @@ def main():
 
     # Highlight KDE for ambiguous points (optional)
     sns.kdeplot(x=std_devs[ambiguous_mask], y=mean_probs[ambiguous_mask], cmap="Greens", fill=True, alpha=0.3)
+    sns.kdeplot(x=std_devs[hard_mask], y=mean_probs[hard_mask], cmap="Blues", fill=True, alpha=0.3)
+    sns.kdeplot(x=std_devs[easy_mask], y=mean_probs[easy_mask], cmap="Reds", fill=True, alpha=0.3)
 
     # Add labels to regions
     bb = lambda c: dict(boxstyle="round,pad=0.3", ec=c, lw=2, fc="white")
@@ -211,6 +220,7 @@ def main():
     plt.title("SNLI-ELECTRA-small Data Map", fontsize=14)
     plt.grid(True)
     plt.show()
+
 
 if __name__ == "__main__":
     main()
