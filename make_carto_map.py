@@ -5,7 +5,11 @@ import torch
 import csv
 import matplotlib.pyplot as plt
 import json
+import seaborn as sns
 
+import matplotlib.cm as cm
+import matplotlib.lines as mlines
+import matplotlib.colors as mcolors
 NUM_PREPROCESSING_WORKERS = 2
 
 def main():
@@ -14,9 +18,12 @@ def main():
     model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint, num_labels=3)
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, use_fast=True)
 
+    # Load SNLI training dataset
+    dataset = datasets.load_dataset("snli")["train"]
+    dataset = dataset.filter(lambda ex: ex['label'] != -1)  # Remove unlabeled examples
     # Load custom dataset
-    dataset_path = "snli_validation_examples.jsonl"
-    dataset = datasets.load_dataset("json", data_files=dataset_path)["train"]
+    #dataset_path = "snli_validation_examples.jsonl"
+    #dataset = datasets.load_dataset("json", data_files=dataset_path)["train"]
 
     # Preprocess dataset
     def prepare_dataset(example):
@@ -51,9 +58,15 @@ def main():
     example_index = 0
 
     def compute_full_label_probs(logits):
-        probs = torch.softmax(torch.tensor(logits), dim=-1).numpy()  # Convert logits to probabilities
+        # Convert logits to torch tensor
+        logits = torch.tensor(logits)
+        # Stabilize logits by subtracting the maximum logit value 
+        logits = logits - torch.max(logits, dim=-1, keepdim=True).values
+        # Apply softmax to compute probabilities
+        probs = torch.softmax(logits, dim=-1).numpy()
         return probs
 
+    
     # Custom trainer
     class CustomTrainer(Trainer):
         def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
@@ -78,8 +91,6 @@ def main():
         train_dataset=processed_dataset,
         tokenizer=tokenizer,
     )
-
-
 
     # Train the model
     trainer.train()
@@ -109,20 +120,65 @@ def main():
 
     # Plotting the scatter plot
     plt.figure(figsize=(10, 8))
-    plt.scatter(std_devs[hard_to_learn], mean_probs[hard_to_learn], c='blue', label='Hard-to-Learn', alpha=0.6)
-    plt.scatter(std_devs[easy_to_learn], mean_probs[easy_to_learn], c='red', label='Easy-to-Learn', alpha=0.6)
-    plt.scatter(std_devs[ambiguous], mean_probs[ambiguous], c='green', label='Ambiguous', alpha=0.6)
+
+    # Define correctness levels and custom bins
+    custom_correctness_levels = [0.0, 0.2, 0.3, 0.5, 0.7, 0.8, 1.0]  # Explicit correctness levels
+    correctness_labels = np.digitize(mean_probs, custom_correctness_levels) - 1  # Map mean_probs to custom bins
+
+    # Define marker styles for correctness levels
+    markers = ['o', '*', 's', 'd', '^', 'v', 'P']  # Circle, star, square, diamond, triangle up, triangle down, plus
+    colors = {'hard_to_learn': 'blue', 'easy_to_learn': 'red', 'ambiguous': 'green'}
+
+    # Create legend entries for custom correctness levels
+    legend_entries = []
+    for level, marker in zip(custom_correctness_levels, markers):
+        legend_entries.append(
+            mlines.Line2D(
+                [], [], color='black', marker=marker, linestyle='None', markersize=8, label=f"{level:.1f}"
+            )
+        )
+
+    # Plot each group (hard-to-learn, easy-to-learn, ambiguous) with custom correctness levels
+    for group, mask, label_color in [
+        ('hard_to_learn', hard_to_learn, colors['hard_to_learn']),
+        ('easy_to_learn', easy_to_learn, colors['easy_to_learn']),
+        ('ambiguous', ambiguous, colors['ambiguous']),
+    ]:
+        for i, marker in enumerate(markers):
+            group_mask = (correctness_labels == i) & mask
+            plt.scatter(
+                std_devs[group_mask],
+                mean_probs[group_mask],
+                c=label_color,
+                marker=marker,
+                alpha=0.6
+            )
+
+    # Add the custom legend for correctness levels
+    plt.legend(
+        handles=legend_entries,
+        title="correct.",
+        loc="upper right",
+        fontsize=10,
+        title_fontsize=11,
+        frameon=True,
+        shadow=False,
+        edgecolor="black"
+    )
+
+    # Highlight KDE for ambiguous points (optional)
+    sns.kdeplot(x=std_devs[ambiguous], y=mean_probs[ambiguous], cmap="Greens", fill=True, alpha=0.3)
 
     # Add labels to regions
     bb = lambda c: dict(boxstyle="round,pad=0.3", ec=c, lw=2, fc="white")
-    plt.text(0.02, 0.85, "easy-to-learn", fontsize=12, bbox=bb('r'))
-    plt.text(0.02, 0.18, "hard-to-learn", fontsize=12, bbox=bb('b'))
-    plt.text(0.31, 0.5, "ambiguous", fontsize=12, bbox=bb('g'))
+    plt.text(0.02, 0.85, "easy-to-learn", fontsize=12, bbox=bb('red'))
+    plt.text(0.02, 0.18, "hard-to-learn", fontsize=12, bbox=bb('blue'))
+    plt.text(0.31, 0.5, "ambiguous", fontsize=12, bbox=bb('green'))
 
-    plt.xlabel("Variability")
-    plt.ylabel("Confidence")
-    plt.title("SNLI-ELECTRA-small Data Map  ")
-    plt.legend()
+    # Add labels, grid, and title
+    plt.xlabel("Variability (Standard Deviation)", fontsize=12)
+    plt.ylabel("Confidence (Mean Probability)", fontsize=12)
+    plt.title("SNLI-ELECTRA-small Data Map", fontsize=14)
     plt.grid(True)
     plt.show()
 
