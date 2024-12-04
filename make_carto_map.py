@@ -1,110 +1,107 @@
 import datasets
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
-import numpy as np
+from transformers import AutoModelForSequenceClassification, AutoTokenizer
 import torch
-import csv
+from torch.utils.data import DataLoader
+from torch.optim import AdamW
+import numpy as np
 import matplotlib.pyplot as plt
-import json
+import matplotlib.lines as mlines  # To create custom legend entries
 import seaborn as sns
-
-import matplotlib.cm as cm
-import matplotlib.lines as mlines
-import matplotlib.colors as mcolors
-NUM_PREPROCESSING_WORKERS = 2
+import json
 
 def main():
-    # Load pretrained model checkpoint
+    # Load SNLI training dataset
+    dataset = datasets.load_dataset("snli")["train"]
+
+    # Remove unlabeled examples and subset 25,000 samples
+    dataset = dataset.filter(lambda ex: ex['label'] != -1)  # Remove unlabeled examples
+    if len(dataset) > 25000:
+        dataset = dataset.shuffle(seed=42).select(range(25000))  # Randomly shuffle and select 25,000 samples
+
+    # Add an index to the dataset to uniquely identify each example
+    dataset = dataset.map(lambda example, idx: {"idx": idx}, with_indices=True)
+
+    # Load pretrained model checkpoint and tokenizer
     model_checkpoint = "trained_model/checkpoint-206013"
     model = AutoModelForSequenceClassification.from_pretrained(model_checkpoint, num_labels=3)
     tokenizer = AutoTokenizer.from_pretrained(model_checkpoint, use_fast=True)
 
-    # Load SNLI training dataset
-    dataset = datasets.load_dataset("snli")["train"]
-    dataset = dataset.filter(lambda ex: ex['label'] != -1)  # Remove unlabeled examples
-    # Load custom dataset
-    #dataset_path = "snli_validation_examples.jsonl"
-    #dataset = datasets.load_dataset("json", data_files=dataset_path)["train"]
+    # Use GPU if available
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model.to(device)
 
-    # Preprocess dataset
-    def prepare_dataset(example):
-        tokenized = tokenizer(
-            example["premise"],
-            example["hypothesis"],
-            max_length=128,
-            truncation=True,
-            padding="max_length",
-        )
-        tokenized["label"] = example["label"]
-        return tokenized
+    # Define optimizer and DataLoader
+    optimizer = AdamW(model.parameters(), lr=5e-5)
+    train_loader = DataLoader(dataset, batch_size=16, shuffle=True)
 
-    processed_dataset = dataset.map(prepare_dataset, batched=False)
+    # Store metrics for each example
+    confidence_records = {i: [] for i in range(len(dataset))}  # To track confidence for each example
 
-    # Training arguments
-    training_args = TrainingArguments(
-        output_dir="./results",
-        do_train=True,
-        per_device_train_batch_size=8,
-        num_train_epochs=3,
-        save_strategy="no",
-        logging_dir="./logs",
-        logging_steps=50,
-        eval_strategy="no",
-        save_total_limit=1,
-    )
+    model.train()
+    for epoch in range(3):
+        print(f"Starting epoch {epoch+1}")
+        for batch in train_loader:
+            # Move inputs and labels to device
+            inputs = tokenizer(batch['premise'], batch['hypothesis'], return_tensors='pt', padding=True, truncation=True).to(device)
+            labels = batch['label'].to(device)
+            idxs = batch['idx']
 
-    # Preallocate probabilities tensor
-    num_examples = len(processed_dataset)
-    correct_label_probs = np.zeros((num_examples, 3), dtype=np.float32)  # 3 is the number of classes
-    example_index = 0
+            # Forward pass
+            outputs = model(**inputs, labels=labels)
 
-    def compute_full_label_probs(logits):
-        # Convert logits to torch tensor
-        logits = torch.tensor(logits)
-        # Stabilize logits by subtracting the maximum logit value 
-        logits = logits - torch.max(logits, dim=-1, keepdim=True).values
-        # Apply softmax to compute probabilities
-        probs = torch.softmax(logits, dim=-1).numpy()
-        return probs
+            # Loss and backward propagation
+            loss = outputs.loss
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad()
 
-    
-    # Custom trainer
-    class CustomTrainer(Trainer):
-        def compute_loss(self, model, inputs, return_outputs=False, **kwargs):
-            nonlocal example_index
-            outputs = model(**inputs)
+            # Get confidence scores (probabilities of correct labels)
             logits = outputs.logits
-            probs = compute_full_label_probs(logits.detach().cpu().numpy())
+            probs = torch.nn.functional.softmax(logits, dim=-1)
+            correct_probs = probs[range(len(labels)), labels]
 
-            labels = inputs["labels"].cpu().numpy()
-            for i in range(len(labels)):
-                if example_index + i < correct_label_probs.shape[0]:
-                    correct_label_probs[example_index + i, labels[i]] = probs[i, labels[i]]
+            # Update confidence records for each example in the batch
+            for idx, prob in zip(idxs, correct_probs):
+                confidence_records[idx.item()].append(prob.item())
 
-            example_index = (example_index + len(labels)) % correct_label_probs.shape[0]
-            loss = super().compute_loss(model, inputs, return_outputs=return_outputs, **kwargs)
-            return (loss, outputs) if return_outputs else loss
+    print("Finished training. Calculating data map...")
+    data_map = []
+    for idx, confidences in confidence_records.items():
+        if len(confidences) > 0:
+            avg_confidence = np.mean(confidences)
+            variability = np.std(confidences)
+            data_map.append({'index': idx, 'avg_confidence': avg_confidence, 'variability': variability})
 
-    # Initialize Trainer
-    trainer = CustomTrainer(
-        model=model,
-        args=training_args,
-        train_dataset=processed_dataset,
-        tokenizer=tokenizer,
-    )
+    # Check if data map is empty
+    if not data_map:
+        print("Data map is empty. No plot will be generated.")
+        return
 
-    # Train the model
-    trainer.train()
+    # Convert data_map to numpy arrays for easier handling
+    mean_probs = np.array([point['avg_confidence'] for point in data_map])
+    std_devs = np.array([point['variability'] for point in data_map])
 
-    # Calculate statistics
-    mean_probs = np.mean(correct_label_probs, axis=1)
-    std_devs = np.std(correct_label_probs, axis=1)
+    # New categorization to ensure all points are distributed into a category
+    easy_to_learn = [
+        point for point in data_map
+        if point['avg_confidence'] > 0.7 and point['variability'] <= 0.2
+    ]
 
-    # Categorize data points
-    hard_to_learn = (mean_probs < 0.30)
-    easy_to_learn = (mean_probs > 0.65) 
-    ambiguous = (mean_probs >= 0.30) & (mean_probs <= 0.65) & (std_devs > 0.25)
+    hard_to_learn = [
+        point for point in data_map
+        if point['avg_confidence'] <= 0.4 and point['variability'] <= 0.5
+    ]
 
-    # Find Index and return sentences into .jsonl file
+    ambiguous = [
+        point for point in data_map
+        if point not in easy_to_learn and point not in hard_to_learn
+    ]
+
+    # Debug: Print the number of points in each category to confirm distribution
+    print(f"Number of easy-to-learn points: {len(easy_to_learn)}")
+    print(f"Number of hard-to-learn points: {len(hard_to_learn)}")
+    print(f"Number of ambiguous points: {len(ambiguous)}")
+     # Find Index and return sentences into .jsonl file
     # Save ambiguous points to a .jsonl file
     ambiguous_points = []
     for i in range(len(ambiguous)):
@@ -117,6 +114,39 @@ def main():
             f.write(json.dumps(point) + "\n")
 
     print(f"Ambiguous data points saved to '{output_path}'.")
+
+     # Find Index and return sentences into .jsonl file
+    # Save ambiguous points to a .jsonl file
+    hard_points = []
+    for i in range(len(hard_to_learn)):
+        if hard_to_learn[i]:
+            hard_points.append(dataset[i])  # Append the original data point
+
+    output_path = "hard_data_points.jsonl"
+    with open(output_path, "w") as f:
+        for point in hard_points:
+            f.write(json.dumps(point) + "\n")
+
+    print(f"Hard data points saved to '{output_path}'.")
+
+     # Find Index and return sentences into .jsonl file
+    # Save ambiguous points to a .jsonl file
+    easy_points = []
+    for i in range(len(easy_to_learn)):
+        if easy_to_learn[i]:
+            easy_points.append(dataset[i])  # Append the original data point
+
+    output_path = "easy_data_points.jsonl"
+    with open(output_path, "w") as f:
+        for point in ambiguous_points:
+            f.write(json.dumps(point) + "\n")
+
+    print(f"Easy data points saved to '{output_path}'.")
+
+    # Create boolean masks for categorization
+    easy_mask = np.array([point in easy_to_learn for point in data_map])
+    hard_mask = np.array([point in hard_to_learn for point in data_map])
+    ambiguous_mask = np.array([point in ambiguous for point in data_map])
 
     # Plotting the scatter plot
     plt.figure(figsize=(10, 8))
@@ -140,9 +170,9 @@ def main():
 
     # Plot each group (hard-to-learn, easy-to-learn, ambiguous) with custom correctness levels
     for group, mask, label_color in [
-        ('hard_to_learn', hard_to_learn, colors['hard_to_learn']),
-        ('easy_to_learn', easy_to_learn, colors['easy_to_learn']),
-        ('ambiguous', ambiguous, colors['ambiguous']),
+        ('hard_to_learn', hard_mask, colors['hard_to_learn']),
+        ('easy_to_learn', easy_mask, colors['easy_to_learn']),
+        ('ambiguous', ambiguous_mask, colors['ambiguous']),
     ]:
         for i, marker in enumerate(markers):
             group_mask = (correctness_labels == i) & mask
@@ -167,7 +197,7 @@ def main():
     )
 
     # Highlight KDE for ambiguous points (optional)
-    sns.kdeplot(x=std_devs[ambiguous], y=mean_probs[ambiguous], cmap="Greens", fill=True, alpha=0.3)
+    sns.kdeplot(x=std_devs[ambiguous_mask], y=mean_probs[ambiguous_mask], cmap="Greens", fill=True, alpha=0.3)
 
     # Add labels to regions
     bb = lambda c: dict(boxstyle="round,pad=0.3", ec=c, lw=2, fc="white")
