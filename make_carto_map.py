@@ -89,9 +89,9 @@ def main():
     std_devs = np.std(correct_label_probs, axis=1)
 
     # Categorize data points
-    hard_to_learn = (mean_probs < 0.36)
-    easy_to_learn = (mean_probs > 0.64) 
-    ambiguous = (mean_probs >= 0.36) & (mean_probs <= 0.64) & (std_devs > 0.3)
+    hard_to_learn = (mean_probs < 0.30)
+    easy_to_learn = (mean_probs > 0.65) 
+    ambiguous = (mean_probs >= 0.30) & (mean_probs <= 0.65) & (std_devs > 0.25)
 
     # Find Index and return sentences into .jsonl file
     # Save ambiguous points to a .jsonl file
