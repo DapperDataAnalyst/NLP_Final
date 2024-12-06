@@ -23,10 +23,27 @@ hard_data = load_jsonl(hard_data_path)
 ambiguous_data = load_jsonl(ambiguous_data_path)
 easy_data = load_jsonl(easy_data_path)
 
+# Total samples in the final dataset
+total_samples = 3000
+
+# Percentage composition (adjust these as needed)
+hard_percentage = 20  # % of hard examples
+ambiguous_percentage = 60  # % of ambiguous examples
+easy_percentage = 20  # % of easy examples
+
+# Calculate number of samples for each category
+num_hard = int((hard_percentage / 100) * total_samples)
+num_ambiguous = int((ambiguous_percentage / 100) * total_samples)
+num_easy = int((easy_percentage / 100) * total_samples)
+
+# Ensure the total adds up to `total_samples`
+if num_hard + num_ambiguous + num_easy != total_samples:
+    raise ValueError("The percentages do not add up to 100%. Please adjust them.")
+
 # Randomly select required number of lines
-selected_hard = random.sample(hard_data, min(900, len(hard_data)))
-selected_ambiguous = random.sample(ambiguous_data, min(1500, len(ambiguous_data)))
-selected_easy = random.sample(easy_data, min(600, len(easy_data)))
+selected_hard = random.sample(hard_data, min(num_hard, len(hard_data)))
+selected_ambiguous = random.sample(ambiguous_data, min(num_ambiguous, len(ambiguous_data)))
+selected_easy = random.sample(easy_data, min(num_easy, len(easy_data)))
 
 # Combine all selected lines
 new_train_dataset = selected_hard + selected_ambiguous + selected_easy
