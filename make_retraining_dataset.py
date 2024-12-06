@@ -31,8 +31,12 @@ selected_easy = random.sample(easy_data, min(600, len(easy_data)))
 # Combine all selected lines
 new_train_dataset = selected_hard + selected_ambiguous + selected_easy
 
-# Save the combined dataset to a new JSONL file
+# Remove "idx" field from each item
+for item in new_train_dataset:
+    if "idx" in item:
+        del item["idx"]
+
+# Save the cleaned dataset to a new JSONL file
 save_jsonl(output_path, new_train_dataset)
 
 print(f"New train dataset saved to '{output_path}' with {len(new_train_dataset)} total lines.")
-
